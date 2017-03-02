@@ -31,19 +31,19 @@ class LogInViewController: UIViewController {
     
     @IBOutlet weak var emailField: UITextField!
     @IBOutlet weak var passwordField: UITextField!
-    @IBAction func nextField(sender: AnyObject) {
+    @IBAction func nextField(_ sender: AnyObject) {
         passwordField.becomeFirstResponder()
     }
     // submit information
-    @IBAction func submit(sender: AnyObject) {
+    @IBAction func submit(_ sender: AnyObject) {
         
         // obvious invalid data shows alert, doesnt log in
-        if (emailField.text == "" || passwordField.text == "" || emailField.text?.containsString("@") == false)  {
+        if (emailField.text == "" || passwordField.text == "" || emailField.text?.contains("@") == false)  {
             let alertView = UIAlertController(title: "Error",
-                message: "Invalid Login" as String, preferredStyle:.Alert)
-            let okAction = UIAlertAction(title: "Try again", style: .Default, handler: nil)
+                message: "Invalid Login" as String, preferredStyle:.alert)
+            let okAction = UIAlertAction(title: "Try again", style: .default, handler: nil)
             alertView.addAction(okAction)
-            self.presentViewController(alertView, animated: true, completion: nil)
+            self.present(alertView, animated: true, completion: nil)
             return;
         }
         
@@ -55,13 +55,13 @@ class LogInViewController: UIViewController {
                 
                 if let errorCode = FAuthenticationError(rawValue: error.code) {
                     switch (errorCode) {
-                    case .UserDoesNotExist:
+                    case .userDoesNotExist:
                         errorText = "Invalid Username"
                         print("Handle invalid user")
-                    case .InvalidEmail:
+                    case .invalidEmail:
                         errorText = "Invalid Email"
                         print("Handle invalid email")
-                    case .InvalidPassword:
+                    case .invalidPassword:
                         errorText = "Invalid Password"
                         print("Handle invalid password")
                     default:
@@ -90,74 +90,74 @@ class LogInViewController: UIViewController {
                 print("UID Saved Locally")
                 
                 //save most recent server data locally
-                server.userData().observeSingleEventOfType(.Value, withBlock: { snapshot in
+                server.userData().observeSingleEvent(of: .value, with: { snapshot in
                     
-                    if snapshot.exists() { //check if it has data
+                    if (snapshot?.exists())! { //check if it has data
                         
                         
                         
-                        if snapshot.hasChild("fullName") {
-                            let fullName = snapshot.value.objectForKey("fullName") as! String
+                        if (snapshot?.hasChild("fullName"))! {
+                            let fullName = (snapshot?.value as AnyObject).object(forKey: "fullName") as! String
                             localData["fullName"] = fullName
                             print("Full Name Saved Locally")
                         }
-                        if snapshot.hasChild("firstName") {
-                            let firstName = snapshot.value.objectForKey("firstName") as! String
+                        if (snapshot?.hasChild("firstName"))! {
+                            let firstName = (snapshot?.value as AnyObject).object(forKey: "firstName") as! String
                             localData["firstName"] = firstName
                             print("First Name Saved Locally")
                         }
-                        if snapshot.hasChild("lastName") {
-                            let lastName = snapshot.value.objectForKey("lastName") as! String
+                        if (snapshot?.hasChild("lastName"))! {
+                            let lastName = (snapshot?.value as AnyObject).object(forKey: "lastName") as! String
                             localData["lastName"] = lastName
                             print("Last Name Saved Locally")
                         }
-                        if snapshot.hasChild("homebase") {
-                            let homebase = snapshot.value.objectForKey("homebase") as! String
+                        if (snapshot?.hasChild("homebase"))! {
+                            let homebase = (snapshot?.value as AnyObject).object(forKey: "homebase") as! String
                             localData["homebase"] = homebase
-                            print("Joined Homebase: " + localData["homebase"]!)
+                            print("Joined Homebase: " + localData["homebase"]!!)
                             print("HomeBase Saved Locally")
                         }
-                        if snapshot.hasChild("provider") {
-                            let provider = snapshot.value.objectForKey("provider") as! String
+                        if (snapshot?.hasChild("provider"))! {
+                            let provider = (snapshot?.value as AnyObject).object(forKey: "provider") as! String
                             localData["provider"] = provider
                             print("Authentication Provider Saved Locally")
                         }
                         
-                        NSUserDefaults.standardUserDefaults().setValue(localData, forKey: "userData")
-                        NSUserDefaults.standardUserDefaults().synchronize()
+                        UserDefaults.standard.setValue(localData, forKey: "userData")
+                        UserDefaults.standard.synchronize()
                         
                     } // even if snapshot does not have data
                     
                     // if user has not selected a Homebase, force to selection screen
-                    if ( NSUserDefaults.standardUserDefaults().valueForKeyPath("userData/homebase") != nil) {
+                    if ( UserDefaults.standard.value(forKeyPath: "userData/homebase") != nil) {
                         //if in a homebase, go home
                         print("Homebase selected, going home")
-                        self.performSegueWithIdentifier("goodLogin", sender: nil)
+                        self.performSegue(withIdentifier: "goodLogin", sender: nil)
                     } else {
                         // else force join one
                         print("Homebase NOT selected, select one now")
-                        self.performSegueWithIdentifier("noHomeBase", sender: nil)
+                        self.performSegue(withIdentifier: "noHomeBase", sender: nil)
                     }
                     
                 })
                 
 
                 
-                NSUserDefaults.standardUserDefaults().synchronize()
+                UserDefaults.standard.synchronize()
             }
         }
 
     }
     // background taps dismiss keyboard
-    override func touchesBegan(touches: Set<UITouch>, withEvent event: UIEvent?) {
+    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         self.view.endEditing(true)
     }
     
-    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         
         
         if (segue.identifier == "getMoreInfo"){ //pass forward filled data
-            let info = segue.destinationViewController as! gatherInfoViewController
+            let info = segue.destination as! gatherInfoViewController
             info.holdPass = passwordField.text!
             info.holdEmail = emailField.text!
         }

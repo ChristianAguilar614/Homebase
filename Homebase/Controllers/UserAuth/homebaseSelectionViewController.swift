@@ -25,15 +25,15 @@ class homebaseSelectionViewController: UIViewController {
     
     @IBOutlet weak var homebaseField: UITextField!
 
-    @IBAction func joinHomeBase(sender: AnyObject) {
+    @IBAction func joinHomeBase(_ sender: AnyObject) {
         
         // homebase cant be empty
         if(homebaseField.text == ""
-            || homebaseField.text?.containsString(".") == true
-            || homebaseField.text?.containsString("#") == true
-            || homebaseField.text?.containsString("$") == true
-            || homebaseField.text?.containsString("[") == true
-            || homebaseField.text?.containsString("]") == true
+            || homebaseField.text?.contains(".") == true
+            || homebaseField.text?.contains("#") == true
+            || homebaseField.text?.contains("$") == true
+            || homebaseField.text?.contains("[") == true
+            || homebaseField.text?.contains("]") == true
             ) {
                 displayBasicAlert("Error", error: "Invalid Entry", buttonText: "OK")
                 return
@@ -41,13 +41,13 @@ class homebaseSelectionViewController: UIViewController {
         
         
         //save homebase name in info on firebase
-        server.userData().childByAppendingPath("homebase").setValue(homebaseField.text)
+        server.userData().child(byAppendingPath: "homebase").setValue(homebaseField.text)
         
         
         //save the homebase info to local storage
         modifyLocalHomebasedata()
         
-        self.performSegueWithIdentifier("finishSignup", sender: nil)
+        self.performSegue(withIdentifier: "finishSignup", sender: nil)
     }
     /*
     // MARK: - Navigation
@@ -59,17 +59,17 @@ class homebaseSelectionViewController: UIViewController {
     }
     */
     
-    private func modifyLocalHomebasedata(){
+    fileprivate func modifyLocalHomebasedata(){
         
         // grab the dictionary
-        var localUserData = NSUserDefaults.standardUserDefaults().valueForKey("userData") as! Dictionary<String,String>
+        var localUserData = UserDefaults.standard.value(forKey: "userData") as! Dictionary<String,String>
         
         //modify the dictionary
         localUserData["homebase"] = homebaseField.text
         
         //put it back
-        NSUserDefaults.standardUserDefaults().setValue(localUserData, forKey: "userData")
-        NSUserDefaults.standardUserDefaults().synchronize()
+        UserDefaults.standard.setValue(localUserData, forKey: "userData")
+        UserDefaults.standard.synchronize()
 
 
         

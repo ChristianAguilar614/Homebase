@@ -12,7 +12,7 @@ import SwiftyJSON
 
 class NewComment: UIViewController, UITextViewDelegate {
     
-    let userData = NSUserDefaults.standardUserDefaults().valueForKey("userData") as! Dictionary<String, String>
+    let userData = UserDefaults.standard.value(forKey: "userData") as! Dictionary<String, String>
     
     var thePostInfo = PostData()
     
@@ -33,7 +33,7 @@ class NewComment: UIViewController, UITextViewDelegate {
         // Dispose of any resources that can be recreated.
     }
     
-    @IBAction func comment(sender: AnyObject) {
+    @IBAction func comment(_ sender: AnyObject) {
         
         let newComment = PostData(
             posterID: server.ref().authData.uid,
@@ -41,10 +41,10 @@ class NewComment: UIViewController, UITextViewDelegate {
             postText: postText.text
         )
         
-        server.broadcasts().childByAppendingPath(thePostInfo.broadcastID + "/comments").childByAutoId().setValue(newComment.fbReadable())
+        server.broadcasts().child(byAppendingPath: thePostInfo.broadcastID + "/comments").childByAutoId().setValue(newComment.fbReadable())
 
         
-        self.navigationController?.popViewControllerAnimated(true)
+        self.navigationController?.popViewController(animated: true)
         
     }
 
@@ -61,19 +61,19 @@ class NewComment: UIViewController, UITextViewDelegate {
     //textView delegate functions & Properties
     
     
-    func textViewDidBeginEditing(textView: UITextView) {
+    func textViewDidBeginEditing(_ textView: UITextView) {
         // if the text color is gray, clear it, set black
-        if textView.textColor == UIColor.lightGrayColor() {
+        if textView.textColor == UIColor.lightGray {
             textView.text = nil
-            textView.textColor = UIColor.blackColor()
+            textView.textColor = UIColor.black
         }
     }
     
-    func textViewDidEndEditing(textView: UITextView) {
+    func textViewDidEndEditing(_ textView: UITextView) {
         // if text is empty after editing, replace with placeholderasd
         if textView.text.isEmpty {
             textView.text = "Placeholder"
-            textView.textColor = UIColor.lightGrayColor()
+            textView.textColor = UIColor.lightGray
         }
     }
 
@@ -81,20 +81,20 @@ class NewComment: UIViewController, UITextViewDelegate {
     func setupTextView() {
         postText.textContainerInset.left = 8.0
         postText.textContainerInset.right = 8.0
-        postText.textColor = UIColor.lightGrayColor()
-        postText.directionalLockEnabled = true
+        postText.textColor = UIColor.lightGray
+        postText.isDirectionalLockEnabled = true
     }
     
     //code for textfield resizing on keyboard popup
     // http://bit.ly/1W1RZEO
     func setupKeyboardNotifications() {
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: Selector("keyboardWasShown:"), name: UIKeyboardDidShowNotification, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(NewComment.keyboardWasShown(_:)), name: NSNotification.Name.UIKeyboardDidShow, object: nil)
     }
     
-    func keyboardWasShown(aNotification:NSNotification) {
+    func keyboardWasShown(_ aNotification:Notification) {
         let info = aNotification.userInfo
         let infoNSValue = info![UIKeyboardFrameBeginUserInfoKey] as! NSValue
-        let kbSize = infoNSValue.CGRectValue().size
+        let kbSize = infoNSValue.cgRectValue.size
         let contentInsets = UIEdgeInsetsMake(0.0, 0.0, kbSize.height + 4, 0.0)
         postText.contentInset = contentInsets
         postText.scrollIndicatorInsets = contentInsets

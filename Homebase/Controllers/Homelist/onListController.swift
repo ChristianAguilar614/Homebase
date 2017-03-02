@@ -1,23 +1,27 @@
 //
-//  ChatView.swift
+//  onListController.swift
 //  Homebase
 //
-//  Created by Justin Oroz on 10/10/15.
+//  Created by Michael A. Gonzalez on 10/10/15.
 //  Copyright © 2015 HomeBase. All rights reserved.
 //
 
 import UIKit
 
-class ChatView: UITableViewController {
-
-    let MyKeychainWrapper = KeychainWrapper()
+class onListController: UITableViewController {
     
+    var listItems = ["cat", "dog", "bear"]
+
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        
+
+        // Uncomment the following line to preserve selection between presentations
+        // self.clearsSelectionOnViewWillAppear = false
+
+        // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
+        // self.navigationItem.rightBarButtonItem = self.editButtonItem()
     }
-    
+
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
@@ -25,25 +29,41 @@ class ChatView: UITableViewController {
 
     // MARK: - Table view data source
 
-    override func numberOfSectionsInTableView(tableView: UITableView) -> Int {
+    override func numberOfSections(in tableView: UITableView) -> Int {
         // #warning Incomplete implementation, return the number of sections
-        return 0
-    }
-
-    override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        // #warning Incomplete implementation, return the number of rows
         return 1
     }
 
-    /*
-    override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCellWithIdentifier("reuseIdentifier", forIndexPath: indexPath)
+    override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        // #warning Incomplete implementation, return the number of rows
+        return (listItems.count + 1)
+    }
+
+    @IBAction func newItem(_ sender: AnyObject) {
+        listItems.append((sender as! UITextField).text!)
+        print(listItems)
+        self.tableView.reloadData()
+
+    }
+    @IBAction func getTitle(_ sender: AnyObject) {
+        
+        //TO DO
+        
+    }
+    
+    override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let cell = tableView.dequeueReusableCell(withIdentifier: "oneListCell", for: indexPath) as! oneListTableViewCell
 
         // Configure the cell...
+        if indexPath.item > 0 {
+            cell.item.text = listItems[indexPath.item-1]
+        } else {
+            cell.item.text = ""
+        }
 
         return cell
     }
-    */
+    
 
     /*
     // Override to support conditional editing of the table view.

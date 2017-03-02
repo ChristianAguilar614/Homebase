@@ -19,7 +19,7 @@ class SettingsView: UIViewController, UITextFieldDelegate {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        let userData = NSUserDefaults.standardUserDefaults().valueForKey("userData") as! Dictionary<String, String>
+        let userData = UserDefaults.standard.value(forKey: "userData") as! Dictionary<String, String>
         
         user_Name.title = userData["fullName"]
         // Do any additional setup after loading the view.
@@ -32,19 +32,19 @@ class SettingsView: UIViewController, UITextFieldDelegate {
         // Dispose of any resources that can be recreated.
     }
     
-    @IBAction func logOut(sender: AnyObject) {
+    @IBAction func logOut(_ sender: AnyObject) {
         server.ref().unauth()
         
         //DELETE INFORMATION FROM SHARED DATA
-        NSUserDefaults.standardUserDefaults().removeObjectForKey("userData")
+        UserDefaults.standard.removeObject(forKey: "userData")
         print("Deleted local userData")
-        NSUserDefaults.standardUserDefaults().synchronize()
+        UserDefaults.standard.synchronize()
         
-        self.performSegueWithIdentifier("logOut", sender: nil)
+        self.performSegue(withIdentifier: "logOut", sender: nil)
         
     }
     
-    @IBAction func randomTheme(sender: AnyObject) {
+    @IBAction func randomTheme(_ sender: AnyObject) {
         let navController = self.navigationController as! colorfulNavigationController
         navController.generateAppTheme()
     }

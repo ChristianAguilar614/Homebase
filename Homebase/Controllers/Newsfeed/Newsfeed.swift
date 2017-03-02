@@ -11,7 +11,7 @@ import Firebase
 
 class Newsfeed: UITableViewController {
     
-    let userData = NSUserDefaults.standardUserDefaults().valueForKey("userData") as! Dictionary<String, String>
+    let userData = UserDefaults.standard.value(forKey: "userData") as! Dictionary<String, String>
     
     var posts: [Dictionary<String, AnyObject>] = []
     
@@ -20,7 +20,7 @@ class Newsfeed: UITableViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        server.broadcasts().observeEventType(FEventType.ChildAdded, withBlock: { (snapshot: FDataSnapshot!) in
+        server.broadcasts().observe(FEventType.childAdded, with: { (snapshot: FDataSnapshot!) in
             
             var post = snapshot.value as! Dictionary<String, AnyObject>
             // saves the ID to allow comments later
@@ -46,13 +46,13 @@ class Newsfeed: UITableViewController {
 
     // MARK: - Table view data source
 
-    override func numberOfSectionsInTableView(tableView: UITableView) -> Int {
+    override func numberOfSections(in tableView: UITableView) -> Int {
         // section 1: Create new Post
         // section 2: posts
         return 2
     }
 
-    override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+    override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         // #warning Incomplete implementation, return the number of rows
         
         if section == 0 {
@@ -63,25 +63,25 @@ class Newsfeed: UITableViewController {
     }
 
     
-    override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
+    override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         if (indexPath.section == 0){
-            let cell = tableView.dequeueReusableCellWithIdentifier("newPost") as! NewPostCell
+            let cell = tableView.dequeueReusableCell(withIdentifier: "newPost") as! NewPostCell
             cell.textLabel?.text = "New Broadcast"
-            cell.textLabel?.textAlignment = NSTextAlignment.Center
+            cell.textLabel?.textAlignment = NSTextAlignment.center
             return cell
         }
         return postCellAtIndexPath(indexPath)
     }
     
-    func postCellAtIndexPath(indexPath:NSIndexPath) -> Postcell {
-        let cell = tableView.dequeueReusableCellWithIdentifier(postCellIdentifier) as! Postcell
+    func postCellAtIndexPath(_ indexPath:IndexPath) -> Postcell {
+        let cell = tableView.dequeueReusableCell(withIdentifier: postCellIdentifier) as! Postcell
         setNameForCell(cell, indexPath: indexPath)
         setTextForCell(cell, indexPath: indexPath)
         return cell
     }
     
-    func setNameForCell(cell:Postcell, indexPath:NSIndexPath) {
-        cell.nameButton.setTitle(posts[(posts.count - 1) - (indexPath.item)]["fullName"] as? String, forState: UIControlState.Normal)
+    func setNameForCell(_ cell:Postcell, indexPath:IndexPath) {
+        cell.nameButton.setTitle(posts[(posts.count - 1) - (indexPath.item)]["fullName"] as? String, for: UIControlState())
         //
         if posts[(posts.count - 1) - (indexPath.item)]["uid"] != nil {
             cell.posterID = posts[(posts.count - 1) - (indexPath.item)]["uid"] as! String
@@ -90,25 +90,25 @@ class Newsfeed: UITableViewController {
   
     
     
-    func setTextForCell(cell:Postcell, indexPath:NSIndexPath) {
+    func setTextForCell(_ cell:Postcell, indexPath:IndexPath) {
         cell.postText.text = posts[(posts.count - 1) - (indexPath.item)]["text"] as? String
         cell.postText.numberOfLines = 4
         cell.postText.sizeToFit()
     }
     
 
-    override func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
+    override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         if indexPath.section == 0 {
             return 45.0
         } else {
-            return heightForCell(posts[(posts.count - 1) - (indexPath.item)]["text"] as! String, font: UIFont.systemFontOfSize(17.0), width: self.tableView.bounds.width - 22) + 60
+            return heightForCell(posts[(posts.count - 1) - (indexPath.item)]["text"] as! String, font: UIFont.systemFont(ofSize: 17.0), width: self.tableView.bounds.width - 22) + 60
         }
     }
     
-    func heightForCell(text:String, font:UIFont, width:CGFloat) -> CGFloat{
-        let label:UILabel = UILabel(frame: CGRectMake(0, 0, width, CGFloat.max))
+    func heightForCell(_ text:String, font:UIFont, width:CGFloat) -> CGFloat{
+        let label:UILabel = UILabel(frame: CGRect(x: 0, y: 0, width: width, height: CGFloat.greatestFiniteMagnitude))
         label.numberOfLines = 4
-        label.lineBreakMode = NSLineBreakMode.ByTruncatingTail
+        label.lineBreakMode = NSLineBreakMode.byTruncatingTail
         label.font = font
         label.text = text
         
@@ -159,12 +159,12 @@ class Newsfeed: UITableViewController {
     let viewPostSegueIdentifier = "viewPost"
 
     // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         // Get the new view controller using segue.destinationViewController.
         // Pass the selected object to the new view controller.
         
         if segue.identifier == viewPostSegueIdentifier {
-            if let destination = segue.destinationViewController as? ViewPost {
+            if let destination = segue.destination as? ViewPost {
                 if let postIndex = tableView.indexPathForSelectedRow?.row {
                     var postedID: String = ""
                     

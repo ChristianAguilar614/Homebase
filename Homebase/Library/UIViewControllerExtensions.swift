@@ -11,12 +11,12 @@ import UIKit
 
 extension UIViewController {
     
-    func displayBasicAlert(title:String, error:String, buttonText: String) {
+    func displayBasicAlert(_ title:String, error:String, buttonText: String) {
         let alertView = UIAlertController(title: title,
-            message: error, preferredStyle:.Alert)
-        let okAction = UIAlertAction(title: buttonText, style: .Default, handler: nil)
+            message: error, preferredStyle:.alert)
+        let okAction = UIAlertAction(title: buttonText, style: .default, handler: nil)
         alertView.addAction(okAction)
-        self.presentViewController(alertView, animated: true, completion: nil)
+        self.present(alertView, animated: true, completion: nil)
     }
 }
 

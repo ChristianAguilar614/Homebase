@@ -1,20 +1,22 @@
-<?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="8191" systemVersion="15A284" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="rVJ-R1-xCw">
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="11762" systemVersion="16D32" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="rVJ-R1-xCw">
+    <device id="retina4_7" orientation="portrait">
+        <adaptation id="fullscreen"/>
+    </device>
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="8154"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="11757"/>
         <capability name="Aspect ratio constraints" minToolsVersion="5.1"/>
         <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
         <!--Begin-->
         <scene sceneID="oTB-ne-mqc">
             <objects>
                 <navigationController storyboardIdentifier="mainpage" title="Begin" useStoryboardIdentifierAsRestorationIdentifier="YES" id="1un-ki-ad1" customClass="colorfulNavigationController" customModule="Homebase" customModuleProvider="target" sceneMemberID="viewController">
-                    <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina55"/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="yHR-Ie-qqZ">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
-                        <animations/>
                     </navigationBar>
                     <connections>
                         <segue destination="49e-Tb-3d3" kind="relationship" relationship="rootViewController" id="k7I-HA-Gr2"/>
@@ -44,8 +46,7 @@
                     <tabBar key="tabBar" contentMode="scaleToFill" id="W28-zg-YXA">
                         <rect key="frame" x="0.0" y="975" width="768" height="49"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES"/>
-                        <animations/>
-                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                        <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="0.0" colorSpace="custom" customColorSpace="sRGB"/>
                     </tabBar>
                     <connections>
                         <segue destination="y8w-dH-TtY" kind="relationship" relationship="viewControllers" id="lDe-wt-bI6"/>
@@ -66,12 +67,11 @@
                         <viewControllerLayoutGuide type="bottom" id="DM3-0t-sMi"/>
                     </layoutGuides>
                     <view key="view" contentMode="scaleToFill" id="STg-2V-hPt">
-                        <rect key="frame" x="0.0" y="0.0" width="414" height="736"/>
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Splash" translatesAutoresizingMaskIntoConstraints="NO" id="kPf-dm-Rky">
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" image="Splash" translatesAutoresizingMaskIntoConstraints="NO" id="kPf-dm-Rky">
                                 <rect key="frame" x="0.0" y="0.0" width="414" height="736"/>
-                                <animations/>
                                 <constraints>
                                     <constraint firstAttribute="width" secondItem="kPf-dm-Rky" secondAttribute="height" multiplier="9:16" id="X8Z-bg-mC5"/>
                                     <constraint firstAttribute="height" constant="736" id="z8y-rg-fzv"/>
@@ -79,16 +79,14 @@
                             </imageView>
                             <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" ambiguous="YES" misplaced="YES" animating="YES" style="gray" translatesAutoresizingMaskIntoConstraints="NO" id="NO9-rn-XFU">
                                 <rect key="frame" x="198" y="295" width="20" height="20"/>
-                                <animations/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="50" id="2T2-2G-WVU"/>
                                     <constraint firstAttribute="width" constant="50" id="rrq-Cg-PvT"/>
                                 </constraints>
-                                <color key="color" red="1" green="0.0" blue="0.051290923323739968" alpha="1" colorSpace="calibratedRGB"/>
+                                <color key="color" red="1" green="0.0" blue="0.051290923323739968" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                             </activityIndicatorView>
                         </subviews>
-                        <animations/>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+                        <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
                             <constraint firstItem="kPf-dm-Rky" firstAttribute="top" secondItem="STg-2V-hPt" secondAttribute="topMargin" id="9Rz-Dg-ibK"/>
                             <constraint firstAttribute="trailingMargin" secondItem="kPf-dm-Rky" secondAttribute="trailing" constant="-20" id="DHQ-vR-y8f"/>
@@ -99,7 +97,6 @@
                             <constraint firstItem="DM3-0t-sMi" firstAttribute="top" secondItem="kPf-dm-Rky" secondAttribute="bottom" id="ysJ-ZQ-RHf"/>
                         </constraints>
                     </view>
-                    <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina55"/>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="yu4-Lw-Pny" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>

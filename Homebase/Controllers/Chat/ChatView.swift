@@ -1,25 +1,23 @@
 //
-//  HomeListsViewController.swift
+//  ChatView.swift
 //  Homebase
 //
-//  Created by Justin Oroz on 10/19/15.
+//  Created by Justin Oroz on 10/10/15.
 //  Copyright © 2015 HomeBase. All rights reserved.
 //
 
 import UIKit
 
-class HomeListsViewController: UITableViewController {
+class ChatView: UITableViewController {
 
+    let MyKeychainWrapper = KeychainWrapper()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-
-        // Uncomment the following line to preserve selection between presentations
-        // self.clearsSelectionOnViewWillAppear = false
-
-        // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
-        // self.navigationItem.rightBarButtonItem = self.editButtonItem()
+        
+        
     }
-
+    
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
@@ -27,41 +25,25 @@ class HomeListsViewController: UITableViewController {
 
     // MARK: - Table view data source
 
-    override func numberOfSectionsInTableView(tableView: UITableView) -> Int {
+    override func numberOfSections(in tableView: UITableView) -> Int {
         // #warning Incomplete implementation, return the number of sections
-        return 2
+        return 0
     }
 
-    override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+    override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         // #warning Incomplete implementation, return the number of rows
         return 1
     }
 
-    
+    /*
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        if indexPath.section == 0 {
-            let cell = tableView.dequeueReusableCellWithIdentifier("NewList", forIndexPath: indexPath)
+        let cell = tableView.dequeueReusableCellWithIdentifier("reuseIdentifier", forIndexPath: indexPath)
 
-            // Configure the cell...
-            cell.textLabel?.text = "Create New List"
+        // Configure the cell...
 
-            return cell
-        } else {
-            let cell = tableView.dequeueReusableCellWithIdentifier("ExistingList", forIndexPath: indexPath)
-            
-            // Configure the cell...
-            
-            return cell
-        }
+        return cell
     }
-    
-    override func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
-        if indexPath.section == 0 {
-            return 45.0
-        } else {
-            return 60.0
-        }
-    }
+    */
 
     /*
     // Override to support conditional editing of the table view.

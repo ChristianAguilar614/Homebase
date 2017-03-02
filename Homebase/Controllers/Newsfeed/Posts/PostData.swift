@@ -31,10 +31,10 @@ class PostData{
     }
     
     //only let the variables be read after being set
-    private(set) var postText:String = ""
-    private(set) var posterID:String = ""
-    private(set) var posterFullName:String = ""
-    private(set) var broadcastID:String = ""
+    fileprivate(set) var postText:String = ""
+    fileprivate(set) var posterID:String = ""
+    fileprivate(set) var posterFullName:String = ""
+    fileprivate(set) var broadcastID:String = ""
     
     func fbReadable() -> NSDictionary{
         //returns the information as readable by Firebase
@@ -44,6 +44,6 @@ class PostData{
             "fullName": self.posterFullName
         ]
         
-        return data
+        return data as NSDictionary
     }
 }

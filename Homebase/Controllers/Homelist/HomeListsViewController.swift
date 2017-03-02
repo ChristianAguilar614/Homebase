@@ -1,21 +1,17 @@
 //
-//  Homelist.swift
+//  HomeListsViewController.swift
 //  Homebase
 //
-//  Created by Michael A. Gonzalez on 10/10/15.
+//  Created by Justin Oroz on 10/19/15.
 //  Copyright © 2015 HomeBase. All rights reserved.
 //
 
 import UIKit
 
-class Homelist: UITableViewController {
-    
-
+class HomeListsViewController: UITableViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        //
 
         // Uncomment the following line to preserve selection between presentations
         // self.clearsSelectionOnViewWillAppear = false
@@ -31,24 +27,41 @@ class Homelist: UITableViewController {
 
     // MARK: - Table view data source
 
-    override func numberOfSectionsInTableView(tableView: UITableView) -> Int {
+    override func numberOfSections(in tableView: UITableView) -> Int {
         // #warning Incomplete implementation, return the number of sections
-        return 1
+        return 2
     }
 
-    override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+    override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         // #warning Incomplete implementation, return the number of rows
         return 1
     }
 
-    /*
-    override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCellWithIdentifier("NewList", forIndexPath: indexPath) as! Homelist_Cell
+    
+    override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        if indexPath.section == 0 {
+            let cell = tableView.dequeueReusableCell(withIdentifier: "NewList", for: indexPath)
 
-        // Configure the cell...
+            // Configure the cell...
+            cell.textLabel?.text = "Create New List"
 
-        return cell
-    } */
+            return cell
+        } else {
+            let cell = tableView.dequeueReusableCell(withIdentifier: "ExistingList", for: indexPath)
+            
+            // Configure the cell...
+            
+            return cell
+        }
+    }
+    
+    override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        if indexPath.section == 0 {
+            return 45.0
+        } else {
+            return 60.0
+        }
+    }
 
     /*
     // Override to support conditional editing of the table view.
