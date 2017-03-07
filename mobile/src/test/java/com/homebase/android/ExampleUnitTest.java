@@ -1,4 +1,4 @@
-package com.homebase.christian.homebase;
+package com.homebase.android;
 
 import org.junit.Test;
 
